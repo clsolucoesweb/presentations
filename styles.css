@@ -1,0 +1,1310 @@
+:root {
+  --gocare-pink: #FA135E;
+  --gocare-hot-pink: #FF0354;
+  --gocare-line-pink: #ED2855;
+  --gocare-coral: #FC4861;
+  --gocare-light-pink: #FFB3C1;
+  --gocare-white: #FFFFFF;
+  --gocare-offwhite: #F5F5F5;
+  --gocare-dark: #283F4A;
+  --gocare-table-dark: #3F3A4A;
+  --gocare-charcoal: #2E383F;
+  --planoa-blue: #0F4C81;
+  --silver-gradient: linear-gradient(135deg, #C9C9C9, #666666);
+  --gold-gradient: linear-gradient(135deg, #FFD95A, #FF8B45);
+  --black-gradient: linear-gradient(135deg, #090909, #4A4A4A);
+  --green-gradient: linear-gradient(135deg, #00A8B5, #6FDB61);
+  --orange-gradient: linear-gradient(135deg, #F04A0C, #FFA14C);
+  --sp2-gradient: linear-gradient(135deg, #3B16B8, #2ABBC8);
+  --steel: #1a4690;
+  --spectrum: #0a5afa;
+  --oxford: #002f63;
+  --ink: #06152e;
+  --text: #283F4A;
+  --muted: #63717A;
+  --panel: rgba(255, 255, 255, 0.86);
+  --panel-2: rgba(255, 255, 255, 0.72);
+  --line: rgba(250, 19, 94, 0.16);
+  --line-strong: rgba(250, 19, 94, 0.26);
+  --shadow: 0 30px 80px rgba(114, 19, 55, 0.18);
+  --radius: 8px;
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--gocare-offwhite);
+  color: var(--text);
+}
+
+body {
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font: inherit;
+}
+
+img,
+svg {
+  display: block;
+}
+
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 15%, rgba(250, 19, 94, 0.34), transparent 27%),
+    radial-gradient(circle at 82% 20%, rgba(255, 179, 193, 0.32), transparent 28%),
+    radial-gradient(circle at 82% 82%, rgba(252, 72, 97, 0.22), transparent 30%),
+    linear-gradient(135deg, #ffffff 0%, #fff3f6 38%, #f8f8f8 68%, #ffd8e1 100%);
+}
+
+.deck::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(40, 63, 74, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(40, 63, 74, 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 80%, transparent 100%);
+}
+
+.deck::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, 0.48), transparent 26%),
+    linear-gradient(290deg, rgba(250, 19, 94, 0.18), transparent 48%);
+  pointer-events: none;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: clamp(18px, 2.2vw, 34px);
+  padding: clamp(28px, 4vw, 58px) clamp(48px, 6.4vw, 112px) 112px;
+  opacity: 0;
+  transform: translateX(32px) scale(0.985);
+  pointer-events: none;
+  transition: opacity 420ms ease, transform 420ms ease;
+}
+
+.slide.is-active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 70px;
+}
+
+.brand-logo--gocare {
+  width: clamp(148px, 14vw, 230px);
+  height: auto;
+  filter: drop-shadow(0 14px 34px rgba(0, 0, 0, 0.2));
+}
+
+.brand-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: rgba(40, 63, 74, 0.68);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.brand-logo--planoa {
+  width: clamp(112px, 10vw, 156px);
+  height: auto;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.content-grid,
+.split-full,
+.region-layout,
+.network-slide,
+.prices-slide,
+.center-stack,
+.full-bleed {
+  min-height: 0;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 78px);
+}
+
+.content-grid--about,
+.content-grid--telemed {
+  grid-template-columns: minmax(360px, 0.92fr) minmax(0, 1.08fr);
+}
+
+.copy-block {
+  max-width: 840px;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2 {
+  margin-bottom: 0;
+  color: var(--gocare-dark);
+  letter-spacing: 0;
+  line-height: 0.98;
+}
+
+h1 {
+  font-size: clamp(54px, 8vw, 132px);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: clamp(42px, 5.4vw, 88px);
+  font-weight: 750;
+}
+
+h3 {
+  color: var(--gocare-white);
+  font-size: clamp(24px, 2.5vw, 38px);
+  line-height: 1.12;
+}
+
+p {
+  max-width: 780px;
+  margin-bottom: 0;
+  color: rgba(40, 63, 74, 0.76);
+  font-size: clamp(18px, 1.7vw, 27px);
+  line-height: 1.42;
+  font-weight: 400;
+}
+
+.copy-block p,
+.telemed-card > p {
+  margin-top: 28px;
+}
+
+.content-grid--cover h1,
+.content-grid--cover h2 {
+  max-width: 760px;
+}
+
+.logo-pair {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-top: 42px;
+}
+
+.logo-pair img {
+  width: auto;
+  max-width: clamp(138px, 14vw, 220px);
+  max-height: 64px;
+}
+
+.ans-line {
+  margin-top: 30px;
+  color: var(--muted);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.image-panel,
+.white-card,
+.institutional-card,
+.audience-grid article,
+.benefit-card,
+.product-card,
+.price-table-wrap,
+.network-logo {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow);
+}
+
+.image-panel {
+  position: relative;
+  min-height: min(58vh, 560px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 76% 18%, rgba(250, 19, 94, 0.24), transparent 31%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.48)),
+    #fff7fa;
+}
+
+.image-panel__photo,
+.manaus-photo img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-panel__photo {
+  filter: saturate(0.98) contrast(1.02);
+}
+
+.image-panel:has(.image-panel__photo:not([hidden])) {
+  background: #fff;
+}
+
+.image-panel:has(.image-panel__photo:not([hidden]))::before {
+  z-index: 1;
+  background:
+    linear-gradient(rgba(250, 19, 94, 0.14) 0 34px, transparent 34px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(250, 19, 94, 0.18));
+}
+
+.image-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(rgba(250, 19, 94, 0.14) 0 34px, transparent 34px);
+  pointer-events: none;
+}
+
+.image-panel::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #ff5f57;
+  box-shadow: 17px 0 #febc2e, 34px 0 #28c840;
+  z-index: 3;
+}
+
+.image-panel__orb {
+  position: absolute;
+  z-index: 2;
+  right: 11%;
+  top: 18%;
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  background: rgba(250, 19, 94, 0.2);
+  box-shadow: 0 0 0 34px rgba(10, 90, 250, 0.05);
+}
+
+.image-panel__person {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 0;
+  width: min(68%, 340px);
+  height: 78%;
+  transform: translateX(-50%);
+}
+
+.image-panel__person span {
+  position: absolute;
+  display: block;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.image-panel__person span:nth-child(1) {
+  left: 38%;
+  top: 10%;
+  width: 24%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.image-panel__person span:nth-child(2) {
+  left: 25%;
+  bottom: 0;
+  width: 50%;
+  height: 60%;
+  border-radius: 46% 46% 0 0;
+}
+
+.image-panel__person span:nth-child(3) {
+  left: 16%;
+  bottom: 35%;
+  width: 68%;
+  height: 16%;
+  border-radius: 999px;
+  background: rgba(250, 19, 94, 0.76);
+  transform: rotate(-10deg);
+}
+
+.image-panel__caption {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  bottom: 28px;
+  z-index: 4;
+  color: var(--gocare-dark);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.split-full {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.95fr) minmax(0, 1.05fr);
+  align-items: stretch;
+  gap: clamp(28px, 5vw, 78px);
+}
+
+.split-full .image-panel,
+.institutional-card .image-panel {
+  min-height: 100%;
+}
+
+.pink-panel,
+.white-card,
+.institutional-card {
+  position: relative;
+  display: grid;
+  align-content: center;
+  min-height: min(60vh, 600px);
+  padding: clamp(30px, 4vw, 58px);
+  overflow: hidden;
+}
+
+.pink-panel {
+  border: 1px solid rgba(250, 19, 94, 0.3);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(circle at 86% 16%, rgba(250, 19, 94, 0.16), transparent 32%),
+    rgba(255, 255, 255, 0.82);
+  box-shadow: var(--shadow);
+}
+
+.pink-panel p {
+  position: relative;
+  z-index: 1;
+  color: var(--gocare-dark);
+  font-size: clamp(32px, 4.2vw, 68px);
+  line-height: 1.08;
+  font-weight: 800;
+}
+
+.pink-panel mark {
+  color: var(--gocare-pink);
+  background: transparent;
+}
+
+.institutional-card {
+  padding: 0;
+}
+
+.institutional-card .image-panel {
+  border: 0;
+  border-radius: inherit;
+  box-shadow: none;
+}
+
+.center-stack {
+  display: grid;
+  align-content: center;
+  gap: clamp(24px, 4vw, 46px);
+}
+
+.center-stack h2,
+.center-stack .section-subtitle {
+  text-align: center;
+}
+
+.audience-grid,
+.benefit-grid,
+.product-grid,
+.tables-grid,
+.logo-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.audience-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.audience-grid article {
+  min-height: 300px;
+  padding: 24px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.62));
+}
+
+.audience-photo {
+  min-height: 150px;
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(circle at 50% 31%, rgba(255, 255, 255, 0.92) 0 13%, transparent 14%),
+    radial-gradient(circle at 50% 90%, rgba(250, 19, 94, 0.7) 0 34%, transparent 35%),
+    linear-gradient(135deg, #111923, #263b58);
+}
+
+.audience-photo--1 {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(250, 19, 94, 0.16)),
+    url("assets/gocare/doctor-patient.jpg") center / cover;
+}
+
+.audience-photo--2 {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(250, 19, 94, 0.16)),
+    url("assets/gocare/business-team.jpg") center / cover;
+}
+
+.audience-photo--3 {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(250, 19, 94, 0.16)),
+    url("assets/gocare/doctor-laptop.jpg") center / cover;
+}
+
+.audience-grid svg,
+.benefit-card svg,
+.location-badge svg {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.audience-grid svg,
+.benefit-card svg {
+  color: var(--gocare-pink);
+}
+
+.audience-grid strong {
+  display: block;
+  margin-top: 16px;
+  color: var(--gocare-dark);
+  font-size: clamp(24px, 2.5vw, 38px);
+  line-height: 1.08;
+  font-weight: 750;
+}
+
+.white-card {
+  background: var(--panel);
+}
+
+.telemed-card h2 {
+  color: var(--gocare-dark);
+}
+
+.telemed-card ul {
+  display: grid;
+  gap: 12px;
+  margin: 22px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.telemed-card li {
+  position: relative;
+  padding-left: 28px;
+  color: rgba(40, 63, 74, 0.82);
+  font-size: clamp(16px, 1.25vw, 19px);
+  line-height: 1.45;
+}
+
+.telemed-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gocare-pink);
+  box-shadow: 0 0 0 7px rgba(250, 19, 94, 0.12);
+}
+
+.dark-note {
+  display: grid;
+  gap: 6px;
+  margin-top: 22px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: #fff;
+  background: var(--gocare-charcoal);
+}
+
+.dark-note span {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.telemed-card small {
+  display: block;
+  margin-top: 18px;
+  color: var(--muted);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+}
+
+.full-bleed {
+  position: relative;
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(34px, 5vw, 76px);
+  background:
+    radial-gradient(circle at 78% 18%, rgba(250, 19, 94, 0.25), transparent 28%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 246, 249, 0.66)),
+    #fff7fa;
+  box-shadow: var(--shadow);
+}
+
+.full-bleed--products {
+  background:
+    linear-gradient(90deg, rgba(40, 63, 74, 0.72), rgba(250, 19, 94, 0.22)),
+    url("assets/gocare/doctor-laptop.jpg") center / cover;
+}
+
+.full-bleed--benefits {
+  background:
+    linear-gradient(90deg, rgba(40, 63, 74, 0.72), rgba(250, 19, 94, 0.2)),
+    url("assets/gocare/doctor-patient.jpg") center / cover;
+}
+
+.full-bleed--products h2,
+.full-bleed--products p,
+.full-bleed--benefits h2,
+.full-bleed--benefits p {
+  color: #fff;
+  text-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+}
+
+.full-bleed::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.full-bleed h2,
+.full-bleed p,
+.full-bleed span {
+  position: relative;
+  z-index: 1;
+}
+
+.full-bleed h2 {
+  color: var(--gocare-dark);
+}
+
+.full-bleed span {
+  display: block;
+  width: min(360px, 54vw);
+  height: 4px;
+  margin: 24px 0;
+  background: linear-gradient(90deg, var(--gocare-pink), var(--spectrum));
+}
+
+.full-bleed p {
+  color: var(--muted);
+  font-size: clamp(24px, 3vw, 44px);
+  font-weight: 700;
+}
+
+.region-layout,
+.network-slide {
+  display: grid;
+  grid-template-columns: minmax(150px, 20vw) 1fr;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: var(--shadow);
+}
+
+.city-rail,
+.manaus-photo {
+  position: relative;
+  overflow: hidden;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 46% 28%, rgba(255, 255, 255, 0.18) 0 8%, transparent 9%),
+    radial-gradient(circle at 50% 78%, rgba(250, 19, 94, 0.34) 0 28%, transparent 29%),
+    linear-gradient(135deg, #ffffff, #ffb3c1 44%, #fa135e);
+}
+
+.city-rail--manaus,
+.manaus-photo {
+  background:
+    linear-gradient(15deg, transparent 48%, rgba(255, 255, 255, 0.55) 49% 52%, transparent 53%),
+    linear-gradient(135deg, #ffffff, #ffb3c1 46%, #fa135e 100%);
+}
+
+.city-rail--manaus {
+  background:
+    linear-gradient(180deg, rgba(250, 19, 94, 0.1), rgba(250, 19, 94, 0.34)),
+    url("assets/gocare/manaus-ponte-rio-negro.jpg") center / cover;
+}
+
+.city-rail:not(.city-rail--manaus) {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(250, 19, 94, 0.3)),
+    url("assets/gocare/doctor-laptop.jpg") center / cover;
+}
+
+.manaus-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(250, 19, 94, 0.08), rgba(40, 63, 74, 0.22));
+}
+
+.region-content,
+.network-content {
+  display: grid;
+  align-content: center;
+  padding: clamp(28px, 4vw, 62px);
+}
+
+.section-subtitle {
+  margin: 0 0 14px;
+  color: var(--gocare-pink);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.product-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 34px;
+}
+
+.product-grid--four {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.product-card {
+  position: relative;
+  min-height: 150px;
+  padding: 26px;
+  overflow: hidden;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.product-card::after {
+  content: "";
+  position: absolute;
+  right: -54px;
+  bottom: -72px;
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.product-card strong,
+.product-card span,
+.product-card em {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.product-card strong {
+  font-size: clamp(34px, 3.7vw, 58px);
+  line-height: 0.95;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.product-card span {
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.product-card em {
+  width: max-content;
+  margin-bottom: 14px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(250, 19, 94, 0.72);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.product-card--silver { background: var(--silver-gradient); }
+.product-card--gold { background: var(--gold-gradient); }
+.product-card--black { background: var(--black-gradient); }
+.product-card--green { background: var(--green-gradient); }
+.product-card--orange { background: var(--orange-gradient); }
+.product-card--sp2 { background: var(--sp2-gradient); }
+.product-card--pink { background: linear-gradient(135deg, var(--gocare-pink), var(--gocare-coral)); }
+
+.split-full--manaus,
+.split-full--business {
+  grid-template-columns: 1fr 1fr;
+}
+
+.pink-panel--manaus h2 span {
+  display: block;
+  color: var(--gocare-pink);
+  font-size: 0.54em;
+}
+
+.pink-panel--manaus p,
+.split-full--business .pink-panel p {
+  margin-top: 24px;
+  color: rgba(40, 63, 74, 0.8);
+  font-size: clamp(18px, 1.7vw, 25px);
+  line-height: 1.48;
+  font-weight: 400;
+}
+
+.split-full--business .pink-panel {
+  padding: clamp(28px, 3.6vw, 52px);
+}
+
+.split-full--business h2 {
+  max-width: 100%;
+  font-size: clamp(42px, 4.2vw, 68px);
+  line-height: 1.02;
+}
+
+.split-full--business .pink-panel p {
+  max-width: 100%;
+  font-size: clamp(17px, 1.42vw, 22px);
+}
+
+.location-badge,
+.corner-badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  margin-bottom: 22px;
+  padding: 10px 14px;
+  border: 1px solid rgba(250, 19, 94, 0.35);
+  border-radius: var(--radius);
+  color: var(--gocare-pink);
+  background: rgba(255, 255, 255, 0.82);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.network-head {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) 1fr;
+  align-items: center;
+  gap: 30px;
+}
+
+.network-content h3 {
+  margin: 32px 0 16px;
+  color: var(--gocare-dark);
+  font-size: clamp(28px, 3vw, 48px);
+}
+
+.logo-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.network-logo {
+  display: grid;
+  place-items: center;
+  min-height: 94px;
+  padding: 18px;
+  color: rgba(40, 63, 74, 0.78);
+  background: rgba(255, 255, 255, 0.72);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.network-logo.is-highlighted {
+  border-color: rgba(250, 19, 94, 0.46);
+  color: var(--gocare-pink);
+  background: rgba(250, 19, 94, 0.1);
+}
+
+.prices-slide {
+  display: grid;
+  align-content: center;
+}
+
+.prices-slide h2 {
+  margin-bottom: 18px;
+  font-size: clamp(26px, 3.2vw, 50px);
+}
+
+.tables-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.price-table-wrap {
+  overflow: auto;
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.price-table {
+  width: 100%;
+  min-width: 540px;
+  border-collapse: collapse;
+}
+
+.price-table caption {
+  padding: 14px 16px;
+  color: var(--gocare-pink);
+  background: rgba(255, 255, 255, 0.78);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.price-table th,
+.price-table td {
+  padding: 9px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: clamp(11px, 0.88vw, 13px);
+  line-height: 1.18;
+  text-align: left;
+}
+
+.price-table th {
+  color: var(--gocare-dark);
+  background: rgba(255, 255, 255, 0.82);
+  font-weight: 800;
+}
+
+.price-table td:first-child {
+  color: #fff;
+  background: rgba(250, 19, 94, 0.8);
+  font-weight: 800;
+}
+
+.price-table td:not(:first-child) {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(63, 58, 74, 0.72);
+  font-weight: 700;
+}
+
+.table-brand {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 18px;
+  color: var(--gocare-dark);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.table-brand img {
+  max-height: 34px;
+  width: auto;
+  padding: 7px 9px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.benefit-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.benefit-card {
+  min-height: 320px;
+  padding: 28px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.64));
+}
+
+.benefit-card--pink {
+  border-color: rgba(250, 19, 94, 0.35);
+}
+
+.benefit-card--dark {
+  border-color: rgba(10, 90, 250, 0.35);
+}
+
+.benefit-card h3 {
+  margin: 26px 0 18px;
+  font-size: clamp(25px, 2.6vw, 42px);
+}
+
+.benefit-card h3 {
+  color: var(--gocare-dark);
+}
+
+.benefit-card p {
+  margin: 8px 0 0;
+  color: rgba(40, 63, 74, 0.7);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.nav-button {
+  position: fixed;
+  bottom: 28px;
+  z-index: 8;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--gocare-dark);
+  background: rgba(255, 255, 255, 0.82);
+  transform: none;
+  cursor: pointer;
+}
+
+.nav-button:hover,
+.nav-button:focus-visible {
+  color: #fff;
+  border-color: rgba(250, 19, 94, 0.5);
+  background: rgba(250, 19, 94, 0.18);
+  outline: none;
+}
+
+.nav-button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.nav-button svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav-button--prev {
+  left: calc(50% - 46px);
+}
+
+.nav-button--next {
+  right: calc(50% - 46px);
+}
+
+.deck-footer {
+  position: fixed;
+  top: 50%;
+  right: 32px;
+  bottom: auto;
+  left: auto;
+  z-index: 8;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+  gap: 14px;
+  transform: translateY(-50%);
+}
+
+.progress {
+  display: none;
+}
+
+.slide-count {
+  order: 2;
+  color: rgba(40, 63, 74, 0.58);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.thumbs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 9px;
+}
+
+.thumb {
+  width: 14px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(40, 63, 74, 0.2);
+  cursor: pointer;
+}
+
+.thumb span {
+  display: none;
+}
+
+.thumb.is-active {
+  width: 18px;
+  background: var(--gocare-pink);
+  box-shadow: 0 0 22px rgba(250, 19, 94, 0.72);
+}
+
+@media (max-width: 1100px) {
+  .slide {
+    padding-left: 58px;
+    padding-right: 58px;
+  }
+
+  .content-grid,
+  .content-grid--about,
+  .content-grid--telemed,
+  .split-full,
+  .split-full--manaus,
+  .split-full--business,
+  .network-head {
+    grid-template-columns: 1fr;
+  }
+
+  .audience-grid,
+  .benefit-grid,
+  .product-grid,
+  .product-grid--four,
+  .tables-grid,
+  .logo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  html,
+  body {
+    overflow: auto;
+  }
+
+  .deck {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .slide {
+    position: relative;
+    display: none;
+    min-height: 100vh;
+    padding: 24px 18px 114px;
+    transform: none;
+  }
+
+  .slide.is-active {
+    display: grid;
+  }
+
+  .brand-row {
+    min-height: 54px;
+  }
+
+  .brand-logo--gocare {
+    width: 126px;
+  }
+
+  .brand-right span {
+    display: none;
+  }
+
+  .brand-logo--planoa {
+    width: 112px;
+  }
+
+  h1 {
+    font-size: clamp(46px, 14vw, 72px);
+  }
+
+  h2 {
+    font-size: clamp(34px, 10.5vw, 56px);
+  }
+
+  p {
+    font-size: 17px;
+  }
+
+  .image-panel,
+  .pink-panel,
+  .white-card {
+    min-height: 360px;
+  }
+
+  .pink-panel {
+    padding: 28px 22px;
+  }
+
+  .pink-panel p {
+    font-size: clamp(27px, 9vw, 42px);
+  }
+
+  .region-layout,
+  .network-slide {
+    grid-template-columns: 1fr;
+  }
+
+  .city-rail {
+    min-height: 118px;
+  }
+
+  .region-content,
+  .network-content {
+    padding: 26px 18px;
+  }
+
+  .price-table {
+    min-width: 0;
+  }
+
+  .price-table thead {
+    display: none;
+  }
+
+  .price-table,
+  .price-table tbody,
+  .price-table tr,
+  .price-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .price-table tr {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .price-table td {
+    display: grid;
+    grid-template-columns: minmax(120px, 42%) 1fr;
+    gap: 10px;
+    border-top: 0;
+  }
+
+  .price-table td::before {
+    content: attr(data-label);
+    font-weight: 800;
+  }
+
+  .deck-footer {
+    top: auto;
+    right: 18px;
+    bottom: 24px;
+    transform: none;
+  }
+
+  .thumbs {
+    display: none;
+  }
+
+  .nav-button {
+    bottom: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+}
+
+/* ───────── Adições: build Nutrição ───────── */
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--planoa-blue);
+  font-size: 14px;
+}
+.brand-mark svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--gocare-pink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.brand-mark strong {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--gocare-dark);
+}
+.copy-block mark {
+  background: transparent;
+  color: var(--gocare-pink);
+  padding: 0;
+}
+.lead-line {
+  font-size: clamp(16px, 1.9vw, 21px);
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 14px 0 18px;
+  max-width: 44ch;
+}
+.plate-card ul,
+.white-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

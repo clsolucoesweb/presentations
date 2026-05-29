@@ -1,30 +1,30 @@
 # presentations
 
-Apresentações sobre saúde — site estático, sem build step.
+Apresentação web sobre **Nutrição & Estilo de Vida** — mesma engine/estilo da
+apresentação institucional do autor, com conteúdo trocado para saúde.
 
 **Online:** https://clsolucoesweb.github.io/presentations/
 
 ## Estrutura
 
 ```
-index.html                          # landing (grid de cards)
-decks/nutricao-estilo-de-vida.html  # deck único self-contained (CSS+JS inline)
-assets/img/favicon.svg              # ícone
-docs/superpowers/specs/             # spec de design
+index.html        # shell do deck (nav, footer, progress, thumbs)
+app.js            # engine (slides data-driven + navegação) — ES module
+styles.css        # estilo (Poppins, tema pink/azul)
+assets/gocare/    # imagens (Pexels/Wikimedia — ver SOURCES.md)
+assets/img/       # favicon
 ```
 
-## Navegação dos decks
+## Navegação
 
-- `→` / `↓` / `Espaço` — próximo slide
-- `←` / `↑` — slide anterior
-- `Home` / `End` — primeiro / último
-- Clique nos dots (rodapé) ou nos botões · swipe no celular
-- Deep-link por slide via hash, ex.: `...nutricao-estilo-de-vida.html#8`
+- `→` / `↓` / `Espaço` ou `PageDown` — próximo
+- `←` / `↑` ou `PageUp` — anterior · `Home` / `End` — primeiro / último
+- Setas laterais · thumbs numerados no rodapé · deep-link por hash (`#5`)
 
-## Stack
-
-HTML/CSS/JS puro. Fontes: Inter, JetBrains Mono, Georgia. Tema claro.
-Nenhuma dependência de build — o GitHub Pages serve os arquivos direto.
+> **Atenção:** `app.js` é um ES module. Abrir `index.html` direto do disco
+> (`file://`) deixa a página **em branco** (browsers bloqueiam módulos via
+> file:// por CORS). Veja pela URL do GitHub Pages acima, ou rode um servidor
+> local: `python -m http.server` e acesse `http://localhost:8000`.
 
 ## Conteúdo
 
