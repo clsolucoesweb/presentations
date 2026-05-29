@@ -1,347 +1,256 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Apresentações · Saúde</title>
-  <meta name="description" content="Apresentações sobre saúde, nutrição e estilo de vida." />
-  <meta property="og:title" content="Apresentações · Saúde" />
-  <meta property="og:description" content="Apresentações sobre saúde, nutrição e estilo de vida." />
-  <meta property="og:type" content="website" />
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --purple: #6c5ce7;
-      --purple-light: #a29bfe;
-      --blue: #0984e3;
-      --yellow: #fdcb6e;
-      --orange: #e17055;
-      --teal: #00b894;
-      --coral: #fd79a8;
-      --red: #d63031;
-      --bg: #ffffff;
-      --text: #1a1a2e;
-      --text-muted: #636e72;
-      --card-bg: #f8f9fa;
-      --card-border: #e9ecef;
-      --shadow-sm: 0 1px 3px rgba(26, 26, 46, .06), 0 1px 2px rgba(26, 26, 46, .04);
-      --shadow-lg: 0 24px 48px -12px rgba(26, 26, 46, .14), 0 8px 24px -8px rgba(26, 26, 46, .08);
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apresentações · Saúde</title>
+    <meta name="description" content="Apresentações sobre saúde, nutrição e estilo de vida." />
+    <meta property="og:title" content="Apresentações · Saúde" />
+    <meta property="og:description" content="Slides sobre saúde, nutrição e estilo de vida — baseados em evidência." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+      :root {
+        --purple: #6c5ce7;
+        --purple-light: #a29bfe;
+        --blue: #0984e3;
+        --yellow: #fdcb6e;
+        --orange: #e17055;
+        --teal: #00b894;
+        --coral: #fd79a8;
+        --red: #d63031;
+        --bg: #ffffff;
+        --text: #1a1a2e;
+        --text-muted: #636e72;
+        --card-bg: #f8f9fa;
+        --card-border: #e9ecef;
+      }
 
-    html { scroll-behavior: smooth; }
+      body {
+        font-family: 'Inter', -apple-system, system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
 
-    body {
-      font-family: 'Inter', -apple-system, system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-    }
+      /* ── Decorative shapes ──────────────────────────────────────── */
+      .deco { position: fixed; pointer-events: none; z-index: 0; }
 
-    /* Soft atmospheric blobs in the background */
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: .14;
-      z-index: 0;
-      pointer-events: none;
-    }
-    body::before {
-      width: 520px; height: 520px;
-      background: var(--teal);
-      top: -180px; right: -120px;
-    }
-    body::after {
-      width: 460px; height: 460px;
-      background: var(--purple);
-      bottom: -200px; left: -140px;
-    }
+      .deco-x { font-size: 28px; font-weight: 800; line-height: 1; opacity: 0.85; }
+      .deco-x-1 { top: 6%;    left: 3%;   color: var(--blue);   font-size: 32px; }
+      .deco-x-2 { top: 18%;   right: 5%;  color: var(--purple); font-size: 24px; }
+      .deco-x-3 { bottom: 22%; left: 6%;  color: var(--orange); font-size: 26px; }
+      .deco-x-4 { bottom: 8%;  right: 4%; color: var(--teal);   font-size: 22px; }
 
-    .wrap {
-      position: relative;
-      z-index: 1;
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+      .deco-dot { border-radius: 50%; }
+      .deco-dot-1 { top: 12%;   left: 14%;  width: 14px; height: 14px; background: var(--yellow); }
+      .deco-dot-2 { top: 8%;    right: 18%; width: 10px; height: 10px; background: var(--coral); }
+      .deco-dot-3 { bottom: 30%; left: 18%; width: 12px; height: 12px; background: var(--purple-light); }
+      .deco-dot-4 { bottom: 15%; right: 20%; width: 14px; height: 14px; background: var(--teal); }
+      .deco-dot-5 { top: 45%;    left: 4%;   width: 10px; height: 10px; background: var(--coral); }
+      .deco-dot-6 { top: 55%;    right: 3%;  width: 12px; height: 12px; background: var(--yellow); }
 
-    /* ---------- Header ---------- */
-    header {
-      padding: 96px 0 56px;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      color: var(--teal);
-      background: rgba(0, 184, 148, .08);
-      padding: 6px 14px;
-      border-radius: 999px;
-      margin-bottom: 22px;
-    }
-    .eyebrow .dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--teal);
-      box-shadow: 0 0 0 4px rgba(0, 184, 148, .18);
-    }
-    h1 {
-      font-size: clamp(2.4rem, 6vw, 4rem);
-      font-weight: 800;
-      letter-spacing: -.03em;
-      line-height: 1.05;
-      max-width: 16ch;
-    }
-    h1 .accent {
-      background: linear-gradient(120deg, var(--teal), var(--blue));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    header p {
-      margin-top: 20px;
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 56ch;
-    }
+      .deco-tri { width: 0; height: 0; }
+      .deco-tri-1 { top: 22%; left: 7%;    border-left: 11px solid transparent; border-right: 11px solid transparent; border-bottom: 20px solid var(--teal);   opacity: 0.75; }
+      .deco-tri-2 { top: 14%; right: 10%;  border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 18px solid var(--orange); opacity: 0.75; }
+      .deco-tri-3 { bottom: 18%; left: 11%; border-left: 9px solid transparent;  border-right: 9px solid transparent;  border-bottom: 16px solid var(--blue);   opacity: 0.7; }
+      .deco-tri-4 { bottom: 25%; right: 8%; border-left: 11px solid transparent; border-right: 11px solid transparent; border-bottom: 20px solid var(--purple); opacity: 0.7; }
 
-    /* ---------- Cards grid ---------- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 22px;
-      padding-bottom: 80px;
-    }
+      .deco-blob { border-radius: 50%; filter: blur(40px); opacity: 0.18; }
+      .deco-blob-1 { bottom: -60px; left: -60px;  width: 320px; height: 260px; background: var(--red); }
+      .deco-blob-2 { bottom: -40px; right: -40px; width: 280px; height: 220px; background: var(--teal); }
+      .deco-blob-3 { top: -80px;    right: 10%;   width: 340px; height: 280px; background: var(--purple); opacity: 0.1; }
 
-    .card {
-      --card-accent: var(--purple);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 28px 26px 26px;
-      text-decoration: none;
-      color: inherit;
-      overflow: hidden;
-      transition: transform .35s cubic-bezier(.2, .8, .2, 1), box-shadow .35s, border-color .35s;
-      animation: rise .7s cubic-bezier(.2, .8, .2, 1) backwards;
-    }
-    .card:nth-child(1) { animation-delay: .05s; }
-    .card:nth-child(2) { animation-delay: .14s; }
-    .card:nth-child(3) { animation-delay: .23s; }
+      .deco-wave { opacity: 0.55; }
+      .deco-wave-1 { top: 35%; left: 2%; }
+      .deco-wave-2 { top: 60%; right: 2%; }
 
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+      /* ── Layout ─────────────────────────────────────────────────── */
+      .page { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 72px 24px 80px; }
 
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 4px;
-      background: var(--card-accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .4s cubic-bezier(.2, .8, .2, 1);
-    }
+      /* ── Header ─────────────────────────────────────────────────── */
+      .header { text-align: center; margin-bottom: 56px; }
+      .header-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(0, 184, 148, 0.08);
+        border: 1.5px solid rgba(0, 184, 148, 0.22);
+        border-radius: 100px; padding: 6px 16px;
+        font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+        color: var(--teal); margin-bottom: 24px;
+      }
+      .header-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+      .header h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 800; line-height: 1.05; letter-spacing: -1.5px; color: var(--text); margin-bottom: 16px; }
+      .header h1 span { color: var(--teal); }
+      .header p { font-size: 17px; font-weight: 400; line-height: 1.6; color: var(--text-muted); max-width: 540px; margin: 0 auto; }
 
-    .card.live:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-lg);
-      border-color: color-mix(in srgb, var(--card-accent) 40%, var(--card-border));
-    }
-    .card.live:hover::before { transform: scaleX(1); }
+      /* ── Grid ───────────────────────────────────────────────────── */
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
 
-    .card-icon {
-      width: 52px; height: 52px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 20px;
-      background: color-mix(in srgb, var(--card-accent) 12%, transparent);
-      color: var(--card-accent);
-    }
-    .card-icon svg { width: 26px; height: 26px; }
+      /* ── Card ───────────────────────────────────────────────────── */
+      .card {
+        background: var(--card-bg); border: 1.5px solid var(--card-border); border-radius: 16px;
+        padding: 28px; text-decoration: none; color: inherit;
+        display: flex; flex-direction: column; gap: 14px;
+        transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        position: relative; overflow: hidden;
+      }
+      .card::before {
+        content: ''; position: absolute; inset: 0;
+        background: var(--card-accent, var(--purple)); opacity: 0;
+        transition: opacity 0.2s; border-radius: inherit;
+      }
+      .card.live:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1); border-color: var(--card-accent, var(--purple)); }
+      .card.live:hover::before { opacity: 0.03; }
 
-    .card h2 {
-      font-size: 1.32rem;
-      font-weight: 700;
-      letter-spacing: -.01em;
-      margin-bottom: 4px;
-    }
-    .card .subtitle {
-      font-size: .92rem;
-      font-weight: 600;
-      color: var(--card-accent);
-      margin-bottom: 14px;
-    }
-    .card .desc {
-      font-size: .95rem;
-      color: var(--text-muted);
-      flex: 1;
-    }
+      .card-icon {
+        width: 44px; height: 44px; border-radius: 12px;
+        background: var(--card-accent, var(--purple));
+        display: flex; align-items: center; justify-content: center;
+        color: #fff; flex-shrink: 0;
+      }
+      .card-icon svg { width: 22px; height: 22px; }
 
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 22px;
-      padding-top: 18px;
-      border-top: 1px solid var(--card-border);
-      font-size: .82rem;
-      color: var(--text-muted);
-    }
-    .chip {
-      background: rgba(26, 26, 46, .05);
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-weight: 600;
-    }
-    .card-meta .go {
-      margin-left: auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 700;
-      color: var(--card-accent);
-    }
-    .card-meta .go svg { width: 16px; height: 16px; transition: transform .3s; }
-    .card.live:hover .card-meta .go svg { transform: translateX(4px); }
+      .card-tag {
+        display: inline-flex; align-items: center; gap: 5px;
+        font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+        color: var(--card-accent, var(--purple));
+        background: color-mix(in srgb, var(--card-accent, var(--purple)) 10%, transparent);
+        border-radius: 6px; padding: 3px 9px; width: fit-content;
+      }
+      .card h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: var(--text); line-height: 1.25; }
+      .card p { font-size: 14px; line-height: 1.65; color: var(--text-muted); flex: 1; }
 
-    /* Disabled / coming soon */
-    .card.soon {
-      cursor: default;
-      opacity: .72;
-    }
-    .card.soon .card-icon { filter: grayscale(.35); }
-    .badge-soon {
-      position: absolute;
-      top: 20px; right: 20px;
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      background: rgba(26, 26, 46, .06);
-      padding: 5px 11px;
-      border-radius: 999px;
-    }
+      .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 6px; border-top: 1px solid var(--card-border); }
+      .card-meta { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+      .card-arrow {
+        width: 32px; height: 32px; border-radius: 50%;
+        background: var(--card-accent, var(--purple));
+        display: flex; align-items: center; justify-content: center;
+        color: #fff; font-size: 14px; transition: transform 0.2s;
+      }
+      .card.live:hover .card-arrow { transform: translateX(3px); }
 
-    /* ---------- Footer ---------- */
-    footer {
-      position: relative;
-      z-index: 1;
-      border-top: 1px solid var(--card-border);
-      padding: 30px 0 48px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: .9rem;
-    }
-    footer .disc {
-      max-width: 60ch;
-      margin: 0 auto 10px;
-      font-size: .82rem;
-      opacity: .85;
-    }
+      /* Coming soon */
+      .card.soon { opacity: 0.65; cursor: default; }
+      .card.soon .card-icon { filter: grayscale(0.25); }
+      .card.soon .card-arrow { background: var(--card-border); color: var(--text-muted); }
 
-    @media (max-width: 560px) {
-      header { padding: 64px 0 40px; }
-      .grid { grid-template-columns: 1fr; }
-    }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <span class="eyebrow"><span class="dot"></span>Apresentações</span>
-      <h1>Conteúdo de saúde,<br /><span class="accent">feito para apresentar.</span></h1>
-      <p>Decks objetivos e baseados em evidência sobre saúde e bem-estar. Navegue com as setas do teclado — ou toque para avançar.</p>
-    </header>
+      /* ── Footer ─────────────────────────────────────────────────── */
+      .footer { text-align: center; margin-top: 64px; font-size: 13px; color: #b2bec3; }
+      .footer .disc { max-width: 60ch; margin: 0 auto 8px; }
+    </style>
+  </head>
+  <body>
 
-    <main class="grid">
-      <!-- LIVE -->
-      <a class="card live" style="--card-accent: var(--teal);" href="decks/nutricao-estilo-de-vida.html">
-        <div class="card-icon">
-          <!-- leaf -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-            <path d="M2 21c0-3 1.85-5.36 5.08-6" />
-          </svg>
+    <!-- Decorative shapes -->
+    <div class="deco deco-x deco-x-1">×</div>
+    <div class="deco deco-x deco-x-2">×</div>
+    <div class="deco deco-x deco-x-3">×</div>
+    <div class="deco deco-x deco-x-4">×</div>
+
+    <div class="deco deco-dot deco-dot-1"></div>
+    <div class="deco deco-dot deco-dot-2"></div>
+    <div class="deco deco-dot deco-dot-3"></div>
+    <div class="deco deco-dot deco-dot-4"></div>
+    <div class="deco deco-dot deco-dot-5"></div>
+    <div class="deco deco-dot deco-dot-6"></div>
+
+    <div class="deco deco-tri deco-tri-1"></div>
+    <div class="deco deco-tri deco-tri-2"></div>
+    <div class="deco deco-tri deco-tri-3"></div>
+    <div class="deco deco-tri deco-tri-4"></div>
+
+    <div class="deco deco-blob deco-blob-1"></div>
+    <div class="deco deco-blob deco-blob-2"></div>
+    <div class="deco deco-blob deco-blob-3"></div>
+
+    <svg class="deco deco-wave deco-wave-1" width="48" height="24" viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 12 C8 4, 16 4, 24 12 S40 20, 48 12" stroke="#00b894" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+    <svg class="deco deco-wave deco-wave-2" width="48" height="24" viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 12 C8 4, 16 4, 24 12 S40 20, 48 12" stroke="#fd79a8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+
+    <!-- Page content -->
+    <div class="page">
+      <header class="header">
+        <div class="header-badge">
+          <span class="header-badge-dot"></span>
+          Apresentações
         </div>
-        <h2>Nutrição &amp; Estilo de Vida</h2>
-        <div class="subtitle">Comer bem, viver melhor</div>
-        <p class="desc">Macronutrientes, padrões alimentares, hidratação, movimento e hábitos sustentáveis — o que a ciência realmente sustenta.</p>
-        <div class="card-meta">
-          <span class="chip">16 slides</span>
-          <span class="chip">PT</span>
-          <span class="go">Abrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-          </span>
-        </div>
-      </a>
+        <h1>Saúde, bem <span>apresentada</span></h1>
+        <p>Slides objetivos e baseados em evidência sobre saúde e bem-estar. Navegue com as setas do teclado — ou toque para avançar.</p>
+      </header>
 
-      <!-- SOON -->
-      <div class="card soon" style="--card-accent: var(--coral);" aria-disabled="true">
-        <span class="badge-soon">Em breve</span>
-        <div class="card-icon">
-          <!-- brain/heart -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 5a3 3 0 0 0-3 3 3 3 0 0 0-2 5.2A3 3 0 0 0 9 19a3 3 0 0 0 3-1 3 3 0 0 0 3 1 3 3 0 0 0 2-5.8A3 3 0 0 0 15 8a3 3 0 0 0-3-3Z" />
-            <path d="M12 5v14" />
-          </svg>
+      <div class="grid">
+
+        <!-- LIVE -->
+        <a href="decks/nutricao-estilo-de-vida.html" class="card live" style="--card-accent: #00b894">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+              <path d="M2 21c0-3 1.85-5.36 5.08-6"/>
+            </svg>
+          </div>
+          <div class="card-tag">Nutrição</div>
+          <h2>Nutrição &amp; Estilo de Vida</h2>
+          <p>Macronutrientes, padrões alimentares, hidratação, movimento e hábitos sustentáveis — o que a ciência realmente sustenta.</p>
+          <div class="card-footer">
+            <span class="card-meta">16 slides · PT-BR</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- SOON -->
+        <div class="card soon" style="--card-accent: #fd79a8" aria-disabled="true">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5a3 3 0 0 0-3 3 3 3 0 0 0-2 5.2A3 3 0 0 0 9 19a3 3 0 0 0 3-1 3 3 0 0 0 3 1 3 3 0 0 0 2-5.8A3 3 0 0 0 15 8a3 3 0 0 0-3-3Z"/>
+              <path d="M12 5v14"/>
+            </svg>
+          </div>
+          <div class="card-tag">Bem-estar</div>
+          <h2>Saúde Mental &amp; Bem-estar</h2>
+          <p>Ansiedade, sono, burnout e hábitos que protegem a saúde mental no dia a dia.</p>
+          <div class="card-footer">
+            <span class="card-meta">Em breve</span>
+            <span class="card-arrow">→</span>
+          </div>
         </div>
-        <h2>Saúde Mental &amp; Bem-estar</h2>
-        <div class="subtitle">Mente em equilíbrio</div>
-        <p class="desc">Ansiedade, sono, burnout e hábitos que protegem a saúde mental no dia a dia.</p>
-        <div class="card-meta">
-          <span class="chip">Em produção</span>
-          <span class="go" style="color: var(--text-muted);">Em breve</span>
+
+        <!-- SOON -->
+        <div class="card soon" style="--card-accent: #0984e3" aria-disabled="true">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <div class="card-tag">Tecnologia</div>
+          <h2>Saúde Digital</h2>
+          <p>Telemedicina, prontuário eletrônico, IA clínica e dados — para onde a saúde está indo.</p>
+          <div class="card-footer">
+            <span class="card-meta">Em breve</span>
+            <span class="card-arrow">→</span>
+          </div>
         </div>
+
       </div>
 
-      <!-- SOON -->
-      <div class="card soon" style="--card-accent: var(--blue);" aria-disabled="true">
-        <span class="badge-soon">Em breve</span>
-        <div class="card-icon">
-          <!-- pulse/monitor -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-          </svg>
-        </div>
-        <h2>Saúde Digital</h2>
-        <div class="subtitle">Tecnologia na saúde</div>
-        <p class="desc">Telemedicina, prontuário eletrônico, IA clínica e dados — para onde a saúde está indo.</p>
-        <div class="card-meta">
-          <span class="chip">Em produção</span>
-          <span class="go" style="color: var(--text-muted);">Em breve</span>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <footer>
-    <div class="wrap">
-      <p class="disc">Conteúdo educativo. Não substitui avaliação, diagnóstico ou orientação de profissional de saúde.</p>
-      <p>© 2026 · @clsolucoesweb</p>
+      <footer class="footer">
+        <p class="disc">Conteúdo educativo. Não substitui avaliação, diagnóstico ou orientação de profissional de saúde.</p>
+        &copy; 2026 · @clsolucoesweb
+      </footer>
     </div>
-  </footer>
-</body>
+
+  </body>
 </html>

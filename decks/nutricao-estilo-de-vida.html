@@ -45,9 +45,20 @@ code,.mono{font-family:'JetBrains Mono',monospace;}
 .slide.active{opacity:1; visibility:visible; transform:none;}
 .slide.leaving-back{transform:translateX(-40px) scale(.99);}
 
-.slide-inner{width:100%; max-width:1100px;}
+.slide-inner{width:100%; max-width:1100px; position:relative; z-index:1;}
 .slide-inner.narrow{max-width:760px;}
 .slide-inner.wide{max-width:1180px;}
+
+/* Decorative shapes (playful motif, matches index) */
+.sdeco{position:absolute; pointer-events:none; z-index:0; line-height:1; opacity:.8;}
+.sdeco-x{font-weight:800;}
+.sdeco-dot{border-radius:50%;}
+.sdeco-tri{width:0; height:0;}
+.sdeco-ring{border-radius:50%; border:3px solid currentColor; opacity:.5;}
+@media (prefers-reduced-motion:no-preference){
+  .slide.active .sdeco{animation:floaty 6s ease-in-out infinite;}
+}
+@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
 /* Slide variants (backgrounds) */
 .slide-white{background:var(--bg);}
@@ -255,6 +266,12 @@ ul.clean li b{color:var(--text);}
 
     <!-- 1 · HERO -->
     <section class="slide slide-hero">
+      <span class="sdeco sdeco-x" style="top:9%; left:6%; color:var(--blue); font-size:30px;">×</span>
+      <span class="sdeco sdeco-x" style="top:20%; right:9%; color:var(--coral); font-size:22px;">×</span>
+      <span class="sdeco sdeco-dot" style="top:14%; right:18%; width:14px; height:14px; background:var(--yellow);"></span>
+      <span class="sdeco sdeco-dot" style="bottom:18%; left:12%; width:12px; height:12px; background:var(--purple-light);"></span>
+      <span class="sdeco sdeco-tri" style="bottom:24%; right:12%; border-left:11px solid transparent; border-right:11px solid transparent; border-bottom:20px solid var(--orange);"></span>
+      <span class="sdeco sdeco-ring" style="top:60%; left:5%; width:34px; height:34px; color:var(--teal);"></span>
       <div class="slide-inner stagger">
         <span class="kicker mono">Saúde · 2026</span>
         <h1>Nutrição &amp;<br /><span class="grad-text">Estilo de Vida</span></h1>
@@ -560,6 +577,10 @@ ul.clean li b{color:var(--text);}
 
     <!-- 16 · ENCERRAMENTO -->
     <section class="slide slide-hero">
+      <span class="sdeco sdeco-x" style="top:12%; right:8%; color:var(--teal); font-size:28px;">×</span>
+      <span class="sdeco sdeco-dot" style="top:18%; left:9%; width:13px; height:13px; background:var(--coral);"></span>
+      <span class="sdeco sdeco-tri" style="bottom:20%; left:10%; border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:18px solid var(--blue);"></span>
+      <span class="sdeco sdeco-ring" style="bottom:24%; right:10%; width:30px; height:30px; color:var(--purple);"></span>
       <div class="slide-inner stagger">
         <span class="kicker mono">Fim</span>
         <h1>Obrigado.<br /><span class="grad-text">Comece pequeno hoje.</span></h1>
@@ -616,9 +637,11 @@ ul.clean li b{color:var(--text);}
     curNum.textContent = current + 1;
     btnPrev.disabled = current === 0;
     btnNext.disabled = current === total - 1;
-    if (location.hash !== '#' + (current + 1)) {
-      history.replaceState(null, '', '#' + (current + 1));
-    }
+    try {
+      if (location.hash !== '#' + (current + 1)) {
+        history.replaceState(null, '', '#' + (current + 1));
+      }
+    } catch (e) { /* file:// origin is opaque — replaceState may throw; nav still works */ }
   }
 
   function goTo(target, dir){
