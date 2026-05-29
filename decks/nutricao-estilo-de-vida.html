@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nutrição &amp; Estilo de Vida</title>
+<meta name="description" content="Apresentação sobre nutrição e estilo de vida baseada em evidência." />
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --purple:#6c5ce7; --purple-light:#a29bfe; --blue:#0984e3; --yellow:#fdcb6e;
+  --orange:#e17055; --teal:#00b894; --coral:#fd79a8; --red:#d63031;
+  --bg:#ffffff; --bg-surface:#f1f3f5; --bg-panel:#f8f9fa; --bg-elevated:#e9ecef;
+  --text:#1a1a2e; --text-secondary:#374151; --text-muted:#6b7280; --text-subtle:#9ca3af;
+  --border-subtle:rgba(0,0,0,.06); --border-std:rgba(0,0,0,.1); --border-solid:#e5e7eb;
+  --accent:var(--teal);
+  --shadow:0 18px 48px -16px rgba(26,26,46,.18), 0 6px 18px -10px rgba(26,26,46,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  font-family:'Inter',-apple-system,system-ui,sans-serif;
+  background:var(--bg); color:var(--text);
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  overflow:hidden;
+}
+code,.mono{font-family:'JetBrains Mono',monospace;}
+
+/* ---------- Deck shell ---------- */
+.deck{position:fixed; inset:0;}
+
+.slides-wrap{position:absolute; inset:0;}
+
+.slide{
+  position:absolute; inset:0;
+  display:grid; place-items:center;
+  padding:6vh 8vw;
+  opacity:0; visibility:hidden;
+  transform:translateX(40px) scale(.99);
+  transition:opacity .5s ease, transform .55s cubic-bezier(.2,.8,.2,1), visibility .55s;
+}
+.slide.active{opacity:1; visibility:visible; transform:none;}
+.slide.leaving-back{transform:translateX(-40px) scale(.99);}
+
+.slide-inner{width:100%; max-width:1100px;}
+.slide-inner.narrow{max-width:760px;}
+.slide-inner.wide{max-width:1180px;}
+
+/* Slide variants (backgrounds) */
+.slide-white{background:var(--bg);}
+.slide-tinted{background:linear-gradient(140deg, #f8fbfa 0%, #f1f6f4 55%, #eef4fb 100%);}
+.slide-hero{
+  background:radial-gradient(1200px 600px at 78% -10%, rgba(0,184,148,.16), transparent 60%),
+             radial-gradient(900px 500px at 10% 110%, rgba(108,92,231,.14), transparent 55%),
+             var(--bg);
+}
+
+/* ---------- Stagger entrance ---------- */
+.slide.active .stagger>*{animation:pop .6s cubic-bezier(.2,.8,.2,1) backwards;}
+.slide.active .stagger>*:nth-child(1){animation-delay:.10s;}
+.slide.active .stagger>*:nth-child(2){animation-delay:.18s;}
+.slide.active .stagger>*:nth-child(3){animation-delay:.26s;}
+.slide.active .stagger>*:nth-child(4){animation-delay:.34s;}
+.slide.active .stagger>*:nth-child(5){animation-delay:.42s;}
+.slide.active .stagger>*:nth-child(6){animation-delay:.50s;}
+.slide.active .stagger>*:nth-child(7){animation-delay:.58s;}
+.slide.active .stagger>*:nth-child(8){animation-delay:.66s;}
+@keyframes pop{from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:none;}}
+
+/* ---------- Typography ---------- */
+.kicker{
+  display:inline-flex; align-items:center; gap:9px;
+  font-size:.78rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:22px;
+}
+.kicker::before{content:""; width:26px; height:2px; background:var(--accent); border-radius:2px;}
+.kicker.mono{font-family:'JetBrains Mono',monospace; letter-spacing:.06em;}
+
+h1{font-size:clamp(2.6rem,6.5vw,5rem); font-weight:800; letter-spacing:-.035em; line-height:1.02;}
+h2{font-size:clamp(1.9rem,4.2vw,3rem); font-weight:800; letter-spacing:-.03em; line-height:1.08; margin-bottom:8px;}
+h3{font-size:1.15rem; font-weight:700; letter-spacing:-.01em;}
+.lead{font-size:clamp(1.05rem,2vw,1.4rem); color:var(--text-secondary); max-width:62ch; margin-top:18px; line-height:1.5;}
+.muted{color:var(--text-muted);}
+.accent-text{color:var(--accent);}
+.grad-text{
+  background:linear-gradient(120deg,var(--teal),var(--blue));
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+
+.section-head{margin-bottom:34px;}
+
+/* ---------- Generic layout helpers ---------- */
+.cols{display:grid; gap:20px;}
+.cols-2{grid-template-columns:repeat(2,1fr);}
+.cols-3{grid-template-columns:repeat(3,1fr);}
+.cols-4{grid-template-columns:repeat(4,1fr);}
+
+.panel{
+  background:var(--bg-panel); border:1px solid var(--border-solid);
+  border-radius:18px; padding:26px 24px;
+}
+.panel .ico{
+  width:46px; height:46px; border-radius:12px; display:grid; place-items:center;
+  margin-bottom:16px; background:color-mix(in srgb,var(--c,var(--accent)) 13%,transparent); color:var(--c,var(--accent));
+}
+.panel .ico svg{width:24px; height:24px;}
+.panel h3{margin-bottom:6px;}
+.panel p{color:var(--text-muted); font-size:.96rem; line-height:1.5;}
+
+.tag{
+  display:inline-block; font-family:'JetBrains Mono',monospace; font-size:.74rem; font-weight:500;
+  padding:4px 10px; border-radius:8px; background:var(--bg-elevated); color:var(--text-secondary);
+}
+
+ul.clean{list-style:none; display:flex; flex-direction:column; gap:14px;}
+ul.clean li{display:flex; gap:14px; align-items:flex-start; font-size:1.05rem; color:var(--text-secondary);}
+ul.clean li .num{
+  flex:none; width:30px; height:30px; border-radius:9px; display:grid; place-items:center;
+  font-family:'JetBrains Mono',monospace; font-size:.82rem; font-weight:600;
+  background:color-mix(in srgb,var(--accent) 12%,transparent); color:var(--accent);
+}
+ul.clean li b{color:var(--text);}
+
+/* Stat row */
+.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:8px;}
+.stat{background:var(--bg-panel); border:1px solid var(--border-solid); border-radius:18px; padding:26px 22px;}
+.stat .big{font-size:clamp(2.2rem,5vw,3.2rem); font-weight:800; letter-spacing:-.03em; line-height:1; color:var(--c,var(--accent));}
+.stat .lbl{margin-top:10px; color:var(--text-muted); font-size:.95rem; line-height:1.4;}
+
+/* Bars */
+.bars{display:flex; flex-direction:column; gap:16px; margin-top:6px;}
+.bar-row{display:grid; grid-template-columns:130px 1fr 56px; align-items:center; gap:14px;}
+.bar-row .name{font-weight:600; font-size:.96rem;}
+.bar-track{height:14px; border-radius:999px; background:var(--bg-elevated); overflow:hidden;}
+.bar-fill{height:100%; border-radius:999px; width:0; background:var(--c,var(--accent)); transition:width 1s cubic-bezier(.2,.8,.2,1);}
+.slide.active .bar-fill{width:var(--w);}
+.bar-row .val{font-family:'JetBrains Mono',monospace; font-size:.86rem; color:var(--text-muted); text-align:right;}
+
+/* Myth vs fact */
+.mf{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+.mf .col{border-radius:18px; padding:22px; border:1px solid var(--border-solid);}
+.mf .myth{background:rgba(214,48,49,.05); border-color:rgba(214,48,49,.2);}
+.mf .fact{background:rgba(0,184,148,.06); border-color:rgba(0,184,148,.25);}
+.mf h4{font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; font-weight:700;}
+.mf .myth h4{color:var(--red);}
+.mf .fact h4{color:var(--teal);}
+.mf ul{list-style:none; display:flex; flex-direction:column; gap:12px;}
+.mf li{font-size:.98rem; color:var(--text-secondary); padding-left:24px; position:relative; line-height:1.45;}
+.mf .myth li::before{content:"✕"; position:absolute; left:0; color:var(--red); font-weight:700;}
+.mf .fact li::before{content:"✓"; position:absolute; left:0; color:var(--teal); font-weight:700;}
+
+/* Harvard plate */
+.plate-wrap{display:grid; grid-template-columns:340px 1fr; gap:40px; align-items:center;}
+.plate{
+  width:300px; height:300px; border-radius:50%;
+  background:conic-gradient(
+    var(--teal) 0 50%,
+    var(--orange) 50% 75%,
+    var(--yellow) 75% 100%);
+  position:relative; box-shadow:var(--shadow); margin:0 auto;
+}
+.plate::after{
+  content:""; position:absolute; inset:0; border-radius:50%;
+  box-shadow:inset 0 0 0 10px rgba(255,255,255,.9);
+}
+.plate .center{
+  position:absolute; inset:38% 38%; border-radius:50%; background:#fff;
+  display:grid; place-items:center; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,.08); z-index:2;
+}
+.plate .center span{font-size:.7rem; font-weight:700; color:var(--text-muted); line-height:1.1;}
+.legend{display:flex; flex-direction:column; gap:16px;}
+.legend .row{display:flex; gap:14px; align-items:flex-start;}
+.legend .sw{flex:none; width:18px; height:18px; border-radius:6px; margin-top:3px;}
+.legend .row b{display:block; font-size:1.02rem;}
+.legend .row p{color:var(--text-muted); font-size:.92rem; margin-top:2px;}
+
+/* Quote */
+.quote{font-family:Georgia, 'Times New Roman', serif; font-size:clamp(1.6rem,3.6vw,2.6rem); line-height:1.3; font-style:italic; color:var(--text); max-width:20ch;}
+.quote .by{display:block; font-family:'Inter',sans-serif; font-style:normal; font-size:1rem; color:var(--text-muted); margin-top:22px; letter-spacing:.02em;}
+
+/* References */
+.refs{display:flex; flex-direction:column; gap:12px;}
+.refs li{list-style:none; display:flex; gap:14px; align-items:baseline; color:var(--text-secondary); font-size:1rem;}
+.refs li .n{font-family:'JetBrains Mono',monospace; color:var(--accent); font-weight:600; flex:none;}
+
+.disclaimer{
+  margin-top:26px; font-size:.86rem; color:var(--text-muted);
+  background:var(--bg-panel); border:1px solid var(--border-solid); border-left:3px solid var(--yellow);
+  padding:14px 16px; border-radius:10px; max-width:64ch;
+}
+
+.hero-meta{display:flex; gap:10px; flex-wrap:wrap; margin-top:30px;}
+.hero-hint{margin-top:40px; display:inline-flex; align-items:center; gap:10px; color:var(--text-muted); font-size:.92rem;}
+.key{
+  font-family:'JetBrains Mono',monospace; font-size:.78rem; font-weight:600;
+  border:1px solid var(--border-solid); border-bottom-width:2px; border-radius:7px;
+  padding:3px 9px; background:var(--bg-panel); color:var(--text-secondary);
+}
+
+/* ---------- Chrome: progress, dots, buttons, counter ---------- */
+#progressBar{position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg,var(--teal),var(--blue)); z-index:50; transition:width .45s cubic-bezier(.2,.8,.2,1);}
+
+.dots{position:fixed; bottom:26px; left:50%; transform:translateX(-50%); display:flex; gap:9px; z-index:50;}
+.progress-dot{width:8px; height:8px; border-radius:50%; border:none; padding:0; cursor:pointer; background:var(--bg-elevated); transition:transform .3s, background .3s;}
+.progress-dot:hover{background:var(--text-subtle);}
+.progress-dot.active{background:var(--accent); transform:scale(1.5);}
+
+.navbtn{
+  position:fixed; bottom:20px; z-index:50; width:46px; height:46px; border-radius:50%;
+  border:1px solid var(--border-solid); background:var(--bg-panel); color:var(--text-secondary);
+  display:grid; place-items:center; cursor:pointer; box-shadow:var(--shadow);
+  transition:transform .25s, color .25s, opacity .25s;
+}
+.navbtn:hover{transform:scale(1.08); color:var(--accent);}
+.navbtn:disabled{opacity:.35; cursor:default; transform:none;}
+.navbtn svg{width:20px; height:20px;}
+#btnPrev{right:78px;}
+#btnNext{right:24px;}
+
+#counter{position:fixed; bottom:30px; left:26px; z-index:50; font-family:'JetBrains Mono',monospace; font-size:.82rem; color:var(--text-subtle);}
+#counter b{color:var(--text);}
+
+#home{position:fixed; top:18px; left:22px; z-index:50; text-decoration:none; font-size:.85rem; font-weight:600; color:var(--text-muted); display:inline-flex; align-items:center; gap:7px; transition:color .25s;}
+#home:hover{color:var(--accent);}
+#home svg{width:16px;height:16px;}
+
+@media (max-width:760px){
+  .slide{padding:8vh 6vw;}
+  .cols-2,.cols-3,.cols-4,.mf{grid-template-columns:1fr;}
+  .stats{grid-template-columns:1fr;}
+  .plate-wrap{grid-template-columns:1fr; gap:26px;}
+  .bar-row{grid-template-columns:96px 1fr 46px;}
+  #counter{display:none;}
+}
+@media (prefers-reduced-motion:reduce){
+  .slide,.slide *{transition:none!important; animation:none!important;}
+  .slide.active .bar-fill{width:var(--w);}
+}
+</style>
+</head>
+<body>
+
+<a id="home" href="../index.html" title="Voltar ao índice">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+  Índice
+</a>
+
+<div id="progressBar"></div>
+
+<div class="deck">
+  <div class="slides-wrap" id="slidesWrap">
+
+    <!-- 1 · HERO -->
+    <section class="slide slide-hero">
+      <div class="slide-inner stagger">
+        <span class="kicker mono">Saúde · 2026</span>
+        <h1>Nutrição &amp;<br /><span class="grad-text">Estilo de Vida</span></h1>
+        <p class="lead">Comer bem e viver melhor — o que a ciência realmente sustenta, sem dietas-milagre nem culpa.</p>
+        <div class="hero-meta">
+          <span class="tag">16 slides</span>
+          <span class="tag">Português</span>
+          <span class="tag">Baseado em evidência</span>
+        </div>
+        <span class="hero-hint">
+          Use <span class="key">→</span> <span class="key">Espaço</span> para avançar · <span class="key">←</span> para voltar
+        </span>
+      </div>
+    </section>
+
+    <!-- 2 · AGENDA -->
+    <section class="slide slide-white">
+      <div class="slide-inner stagger">
+        <div class="section-head">
+          <span class="kicker">Agenda</span>
+          <h2>O que vamos cobrir</h2>
+        </div>
+        <ul class="clean">
+          <li><span class="num">01</span><span><b>Por que nutrição importa</b> — o peso da alimentação na saúde.</span></li>
+          <li><span class="num">02</span><span><b>Macro &amp; micronutrientes</b> — o que o corpo precisa e por quê.</span></li>
+          <li><span class="num">03</span><span><b>Mitos × ciência</b> e <b>padrões alimentares</b> que funcionam.</span></li>
+          <li><span class="num">04</span><span><b>O prato saudável</b>, hidratação, movimento e sono.</span></li>
+          <li><span class="num">05</span><span><b>Hábitos sustentáveis</b> e quando procurar ajuda.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3 · POR QUE IMPORTA -->
+    <section class="slide slide-tinted">
+      <div class="slide-inner wide stagger">
+        <div class="section-head">
+          <span class="kicker">Contexto</span>
+          <h2>Por que nutrição importa</h2>
+          <p class="lead">A alimentação está entre os principais fatores de risco modificáveis para doenças crônicas — e também entre os mais negligenciados.</p>
+        </div>
+        <div class="stats">
+          <div class="stat" style="--c:var(--red);">
+            <div class="big">≥400g</div>
+            <div class="lbl">de frutas e vegetais por dia é a recomendação da OMS — a maioria não atinge.</div>
+          </div>
+          <div class="stat" style="--c:var(--orange);">
+            <div class="big">&lt;5g</div>
+            <div class="lbl">de sal por dia (≈1 colher de chá). O consumo médio costuma ser o dobro.</div>
+          </div>
+          <div class="stat" style="--c:var(--teal);">
+            <div class="big">&lt;10%</div>
+            <div class="lbl">das calorias vindas de açúcar livre — idealmente abaixo de 5% (OMS).</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · MACRONUTRIENTES -->
+    <section class="slide slide-white">
+      <div class="slide-inner wide stagger">
+        <div class="section-head">
+          <span class="kicker">Fundamentos</span>
+          <h2>Macronutrientes</h2>
+          <p class="lead">Os três fornecem energia. Nenhum é vilão — o que muda é a qualidade e a quantidade.</p>
+        </div>
+        <div class="cols cols-3">
+          <div class="panel" style="--c:var(--yellow);">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 19c0-5 2-9 6-9s6 4 6 9M12 10V4"/></svg></div>
+            <h3>Carboidratos</h3>
+            <p>Principal fonte de energia. Prefira integrais, frutas, legumes e leguminosas — ricos em fibra. Modere refinados e açúcar.</p>
+          </div>
+          <div class="panel" style="--c:var(--coral);">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg></div>
+            <h3>Proteínas</h3>
+            <p>Constroem e reparam tecidos. Varie fontes: feijões, ovos, peixes, aves, laticínios. Leguminosas + cereais se complementam.</p>
+          </div>
+          <div class="panel" style="--c:var(--teal);">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0-6 6c0 4 6 12 6 12s6-8 6-12a6 6 0 0 0-6-6Z"/></svg></div>
+            <h3>Gorduras</h3>
+            <p>Essenciais para hormônios e absorção de vitaminas. Priorize insaturadas (azeite, abacate, oleaginosas). Evite gordura trans.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · MICRONUTRIENTES -->
+    <section class="slide slide-tinted">
+      <div class="slide-inner wide stagger">
+        <div class="section-head">
+          <span class="kicker">Fundamentos</span>
+          <h2>Micronutrientes que merecem atenção</h2>
+          <p class="lead">Necessários em pequenas doses, decisivos para o funcionamento do corpo.</p>
+        </div>
+        <div class="cols cols-4">
+          <div class="panel"><h3>Ferro</h3><p>Transporte de oxigênio. Carnes, feijões, folhas verdes. Vitamina C melhora a absorção.</p></div>
+          <div class="panel"><h3>Cálcio + Vit. D</h3><p>Ossos e músculos. Laticínios, vegetais verdes; D vem também do sol.</p></div>
+          <div class="panel"><h3>Vitamina B12</h3><p>Sangue e nervos. Origem animal — vegetarianos/veganos devem suplementar.</p></div>
+          <div class="panel"><h3>Fibras</h3><p>Saciedade, intestino e glicemia. Integrais, frutas, legumes e leguminosas.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · MITOS x CIÊNCIA -->
+    <section class="slide slide-white">
+      <div class="slide-inner wide stagger">
+        <div class="section-head">
+          <span class="kicker">Realidade</span>
+          <h2>Mitos × ciência</h2>
+        </div>
+        <div class="mf">
+          <div class="col myth">
+            <h4>Mito</h4>
+            <ul>
+              <li>"Carboidrato à noite engorda."</li>
+              <li>"Detox elimina toxinas do corpo."</li>
+              <li>"Glúten e lactose fazem mal para todos."</li>
+              <li>"Comer gordura deixa você gordo."</li>
+            </ul>
+          </div>
+          <div class="col fact">
+            <h4>Evidência</h4>
+            <ul>
+              <li>O que pesa é o balanço calórico e a qualidade — não o horário.</li>
+              <li>Fígado e rins já fazem a desintoxicação; "detox" não tem base.</li>
+              <li>Só quem tem doença celíaca ou intolerância precisa restringir.</li>
+              <li>Gorduras boas são essenciais; o excesso de calorias é o que importa.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · PADRÕES ALIMENTARES -->
+    <section class="slide slide-tinted">
+      <div class="slide-inner wide stagger">
+        <div class="section-head">
+          <span class="kicker">Estratégia</span>
+          <h2>Padrões alimentares com respaldo</h2>
+          <p class="lead">Mais importante que um alimento isolado é o padrão geral, sustentado ao longo do tempo.</p>
+        </div>
+        <div class="cols cols-3">
+          <div class="panel" style="--c:var(--teal);">
+            <span class="tag">Mediterrânea</span>
+            <h3 style="margin-top:14px;">Azeite, vegetais, peixe</h3>
+            <p>Rica em vegetais, leguminosas, oleaginosas, azeite e peixe. Associada a menor risco cardiovascular.</p>
+          </div>
+          <div class="panel" style="--c:var(--blue);">
+            <span class="tag">DASH</span>
+            <h3 style="margin-top:14px;">Foco na pressão</h3>
+            <p>Desenhada para reduzir hipertensão: menos sódio, mais frutas, vegetais e laticínios magros.</p>
+          </div>
+          <div class="panel" style="--c:var(--orange);">
+            <span class="tag">Plant-forward</span>
+            <h3 style="margin-top:14px;">Base vegetal</h3>
+            <p>Comida de verdade, com protagonismo de plantas. Menos ultraprocessados, como orienta o Guia Alimentar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · PRATO SAUDÁVEL -->
+    <section class="slide slide-white">
+      <div class="slide-inner wide stagger">
+        <div class="section-head">
+          <span class="kicker">Na prática</span>
+          <h2>O prato saudável</h2>
+        </div>
+        <div class="plate-wrap">
+          <div class="plate">
+            <div class="center"><span>ÁGUA<br/>+ AZEITE</span></div>
+          </div>
+          <div class="legend">
+            <div class="row"><span class="sw" style="background:var(--teal);"></span><div><b>½ vegetais e frutas</b><p>Quanto mais cor e variedade, melhor. Batata não conta como vegetal aqui.</p></div></div>
+            <div class="row"><span class="sw" style="background:var(--orange);"></span><div><b>¼ grãos integrais</b><p>Arroz integral, aveia, pães integrais — em vez de refinados.</p></div></div>
+            <div class="row"><span class="sw" style="background:var(--yellow);"></span><div><b>¼ proteínas saudáveis</b><p>Feijões, peixe, ovos, aves. Modere carnes vermelhas e processadas.</p></div></div>
+            <div class="row"><span class="sw" style="background:var(--bg-elevated); box-shadow:inset 0 0 0 2px var(--text-subtle);"></span><div><b>Água como bebida</b><p>Azeite para temperar. Evite refrigerantes e sucos açucarados.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 · HIDRATAÇÃO -->
+    <section class="slide slide-tinted">
+      <div class="slide-inner wide stagger">
+        <div class="section-head">
+          <span class="kicker">Hidratação</span>
+          <h2>Água em primeiro lugar</h2>
+          <p class="lead">Não existe número mágico para todos — sede, clima e atividade mandam. Use estes sinais.</p>
+        </div>
+        <div class="bars">
+          <div class="bar-row"><span class="name">Água</span><div class="bar-track"><div class="bar-fill" style="--w:92%; --c:var(--teal);"></div></div><span class="val">Base</span></div>
+          <div class="bar-row"><span class="name">Café / chá</span><div class="bar-track"><div class="bar-fill" style="--w:55%; --c:var(--blue);"></div></div><span class="val">Ok</span></div>
+          <div class="bar-row"><span class="name">Suco natural</span><div class="bar-track"><div class="bar-fill" style="--w:30%; --c:var(--yellow);"></div></div><span class="val">Pouco</span></div>
+          <div class="bar-row"><span class="name">Refrigerante</span><div class="bar-track"><div class="bar-fill" style="--w:10%; --c:var(--red);"></div></div><span class="val">Evite</span></div>
+        </div>
+        <p class="muted" style="margin-top:22px;">Dica simples: urina clara ao longo do dia costuma indicar boa hidratação.</p>
+      </div>
+    </section>
+
+    <!-- 10 · MOVIMENTO + SONO -->
+    <section class="slide slide-white">
+      <div class="slide-inner wide stagger">
+        <div class="section-head">
+          <span class="kicker">Estilo de vida</span>
+          <h2>Nutrição não anda sozinha</h2>
+          <p class="lead">Comida, movimento e sono formam um tripé. Falhar em um sabota os outros.</p>
+        </div>
+        <div class="cols cols-2">
+          <div class="panel" style="--c:var(--coral);">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h2l2-6 4 14 3-8h5"/></svg></div>
+            <h3>Movimento · 150–300 min/semana</h3>
+            <p>Atividade aeróbica moderada por semana + 2 dias de força (OMS). Qualquer movimento conta — comece pequeno.</p>
+          </div>
+          <div class="panel" style="--c:var(--purple);">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></div>
+            <h3>Sono · 7–9 horas</h3>
+            <p>Pouco sono aumenta fome, vontade de ultraprocessados e estresse. Horários regulares ajudam mais que dormir tarde no fim de semana.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · HÁBITOS SUSTENTÁVEIS -->
+    <section class="slide slide-tinted">
+      <div class="slide-inner stagger">
+        <div class="section-head">
+          <span class="kicker">Comportamento</span>
+          <h2>Hábitos que ficam</h2>
+          <p class="lead">Mudança que dura é pequena, repetível e amigável — não radical.</p>
+        </div>
+        <ul class="clean">
+          <li><span class="num">01</span><span><b>Mude o ambiente, não só a força de vontade.</b> Deixe o saudável à vista e o resto fora de casa.</span></li>
+          <li><span class="num">02</span><span><b>Uma troca por vez.</b> Refrigerante → água com gás. Refinado → integral.</span></li>
+          <li><span class="num">03</span><span><b>Regra do "bom o bastante".</b> Consistência 80/20 vence a perfeição que não dura.</span></li>
+          <li><span class="num">04</span><span><b>Coma com atenção.</b> Sem tela, devagar — o cérebro leva ~20 min para sentir saciedade.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 12 · PLANEJAMENTO -->
+    <section class="slide slide-white">
+      <div class="slide-inner wide stagger">
+        <div class="section-head">
+          <span class="kicker">Na prática</span>
+          <h2>Planejar é metade do caminho</h2>
+        </div>
+        <div class="cols cols-3">
+          <div class="panel" style="--c:var(--teal);"><span class="tag">1 · Planeje</span><h3 style="margin-top:14px;">Cardápio da semana</h3><p>Defina 4–5 refeições-base. Lista de compras evita decisões por impulso e desperdício.</p></div>
+          <div class="panel" style="--c:var(--blue);"><span class="tag">2 · Prepare</span><h3 style="margin-top:14px;">Cozinhe em lote</h3><p>Deixe grãos, proteínas e vegetais prontos. Refeição rápida no dia corrido.</p></div>
+          <div class="panel" style="--c:var(--orange);"><span class="tag">3 · Monte</span><h3 style="margin-top:14px;">Use o prato como guia</h3><p>½ vegetais, ¼ integrais, ¼ proteína. Simples de repetir em qualquer refeição.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 · SINAIS DE ALERTA -->
+    <section class="slide slide-tinted">
+      <div class="slide-inner wide stagger">
+        <div class="section-head">
+          <span class="kicker" style="color:var(--red);">Atenção</span>
+          <h2>Quando procurar um profissional</h2>
+          <p class="lead">Esta apresentação é educativa. Estes sinais pedem avaliação individual.</p>
+        </div>
+        <div class="cols cols-2">
+          <div class="panel" style="--c:var(--red);">
+            <h3>Sinais de alerta</h3>
+            <p style="margin-top:10px;">Perda ou ganho de peso sem explicação · fadiga persistente · alterações digestivas frequentes · relação de sofrimento com a comida.</p>
+          </div>
+          <div class="panel" style="--c:var(--teal);">
+            <h3>Quem pode ajudar</h3>
+            <p style="margin-top:10px;">Nutricionista para plano individual · médico para investigar causas · apoio psicológico quando há compulsão ou restrição.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 · TAKEAWAYS / QUOTE -->
+    <section class="slide slide-hero">
+      <div class="slide-inner stagger">
+        <span class="kicker">Para levar</span>
+        <p class="quote">"Coma comida de verdade, na maior parte vegetal, sem exageros."
+          <span class="by">— princípio que resume o que a evidência sustenta</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- 15 · REFERÊNCIAS -->
+    <section class="slide slide-white">
+      <div class="slide-inner wide stagger">
+        <div class="section-head">
+          <span class="kicker">Fontes</span>
+          <h2>Referências</h2>
+        </div>
+        <ul class="refs">
+          <li><span class="n">01</span><span>OMS — Recomendações sobre alimentação saudável (frutas/vegetais ≥400 g/dia, açúcar livre &lt;10%, sal &lt;5 g/dia).</span></li>
+          <li><span class="n">02</span><span>OMS — Diretrizes de atividade física (150–300 min/semana de atividade moderada).</span></li>
+          <li><span class="n">03</span><span>Ministério da Saúde (Brasil) — Guia Alimentar para a População Brasileira.</span></li>
+          <li><span class="n">04</span><span>Harvard T.H. Chan School of Public Health — Healthy Eating Plate.</span></li>
+          <li><span class="n">05</span><span>Dietas Mediterrânea e DASH — literatura sobre risco cardiovascular e pressão arterial.</span></li>
+        </ul>
+        <div class="disclaimer">Os valores são recomendações gerais de saúde pública e podem variar conforme idade, condição clínica e necessidades individuais.</div>
+      </div>
+    </section>
+
+    <!-- 16 · ENCERRAMENTO -->
+    <section class="slide slide-hero">
+      <div class="slide-inner stagger">
+        <span class="kicker mono">Fim</span>
+        <h1>Obrigado.<br /><span class="grad-text">Comece pequeno hoje.</span></h1>
+        <p class="lead">Uma troca, uma caminhada, um copo de água a mais. O resto vem da repetição.</p>
+        <div class="disclaimer">Conteúdo educativo. Não substitui avaliação, diagnóstico ou orientação de profissional de saúde.</div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- Chrome -->
+<div class="dots" id="dots"></div>
+<button class="navbtn" id="btnPrev" aria-label="Slide anterior">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+</button>
+<button class="navbtn" id="btnNext" aria-label="Próximo slide">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+</button>
+<div id="counter"><b id="curNum">1</b> / <span id="totNum">1</span></div>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let current = 0;
+
+  const bar = document.getElementById('progressBar');
+  const dotsWrap = document.getElementById('dots');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+  const curNum = document.getElementById('curNum');
+  const totNum = document.getElementById('totNum');
+
+  totNum.textContent = total;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'progress-dot';
+    d.setAttribute('aria-label', 'Ir para slide ' + (i + 1));
+    d.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(d);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function render(dir){
+    slides.forEach((s, i) => {
+      s.classList.toggle('active', i === current);
+      s.classList.toggle('leaving-back', dir === 'backward' && i !== current);
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    bar.style.width = (total <= 1 ? 100 : (current / (total - 1)) * 100) + '%';
+    curNum.textContent = current + 1;
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === total - 1;
+    if (location.hash !== '#' + (current + 1)) {
+      history.replaceState(null, '', '#' + (current + 1));
+    }
+  }
+
+  function goTo(target, dir){
+    target = Math.max(0, Math.min(total - 1, target));
+    if (target === current) return;
+    const direction = dir || (target > current ? 'forward' : 'backward');
+    current = target;
+    render(direction);
+  }
+  const next = () => goTo(current + 1, 'forward');
+  const prev = () => goTo(current - 1, 'backward');
+
+  btnNext.addEventListener('click', next);
+  btnPrev.addEventListener('click', prev);
+
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){ e.preventDefault(); next(); }
+    else if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); prev(); }
+    else if (e.key === 'Home'){ e.preventDefault(); goTo(0, 'backward'); }
+    else if (e.key === 'End'){ e.preventDefault(); goTo(total - 1, 'forward'); }
+  });
+
+  // Touch swipe
+  let touchX = null, touchY = null;
+  document.addEventListener('touchstart', (e) => {
+    touchX = e.changedTouches[0].clientX; touchY = e.changedTouches[0].clientY;
+  }, {passive:true});
+  document.addEventListener('touchend', (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    const dy = e.changedTouches[0].clientY - touchY;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) { dx < 0 ? next() : prev(); }
+    touchX = touchY = null;
+  }, {passive:true});
+
+  // Deep-link via hash (#3)
+  const fromHash = parseInt((location.hash || '').replace('#',''), 10);
+  if (!isNaN(fromHash) && fromHash >= 1 && fromHash <= total) current = fromHash - 1;
+
+  render('forward');
+})();
+</script>
+</body>
+</html>
